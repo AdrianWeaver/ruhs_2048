@@ -6,7 +6,7 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 11:42:25 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 18:54:02 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/19 20:07:37 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	fusion(t_block *a, t_block *b)
 {
 	if (a->number != b->number)
 		return (FALSE);
-	if (a->fusion == TRUE)
+	if (a->fusion || b->fusion)
 		return (FALSE);
 	a->number *= 2;	
 	b->number = HOLLOW;

@@ -6,7 +6,7 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 12:56:28 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 19:07:21 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/19 20:08:02 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ int	down(t_block *plate, int size)
 		while ((i + 1) % size != 0)
 		{
 			if (plate[i + 1].number == HOLLOW)
+			{
 				swap(&(plate[i + 1].number), &(plate[i].number));
+				swap(&(plate[i + 1].fusion), &(plate[i].fusion));
+			}
 			else if (!fusion(&(plate[i + 1]), &(plate[i])))
 				break;
 			res++;
