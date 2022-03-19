@@ -6,7 +6,7 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 11:42:25 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 13:35:37 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/19 15:53:20 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	fusion(t_block *a, t_block *b)
 	if (a->fusion == TRUE)
 		return (FALSE);
 	a->number *= 2;	
+	b->number = HOLLOW;
 	a->fusion = TRUE;
 	return (TRUE);
 }
@@ -56,6 +57,8 @@ t_block	*copy(t_block *original, int size)
 	int	i;
 
 	new = (t_block *)malloc(sizeof(t_block) * (size * size));
+	if (new == NULL)
+		return (t_block *)(NULL);
 	i = 0;
 	while (i < (size * size))
 	{
@@ -66,12 +69,31 @@ t_block	*copy(t_block *original, int size)
 	return (new);
 }
 
+// Return true les 2 listes sont identiques
+int	compare(t_block *original, t_block *copy, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)	
+	{
+		if (copy[i].number != original[i].number)
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
+
 int	lose(t_block *plate, int size)
 {
 	t_block *temp;
 
 	temp = copy(plate, size);
+	if (temp == NULL)
+		return (1);
+
 	free(temp);
+	return (0);
 }
 
 t_block	*initialisation(int size)	
@@ -81,6 +103,8 @@ t_block	*initialisation(int size)
 	int	n;
 
 	res = (t_block *)malloc(sizeof(t_block) * (size * size));
+	if (res == NULL)
+		return (t_block *)(NULL);
 	n = (size * size);
 	i = 0;
 	while (i < n)

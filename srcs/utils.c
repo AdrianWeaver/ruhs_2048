@@ -6,7 +6,7 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 12:55:51 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 13:27:13 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/19 13:53:41 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	get_random(void)
 	return (4);
 }
 
-int	swap(int *a, int *b)
+void	swap(int *a, int *b)
 {
 	int	temp;
 
