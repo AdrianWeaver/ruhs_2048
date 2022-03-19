@@ -31,7 +31,7 @@ LIBFT	=	$(addprefix $(LIBFT_PATH), libft.a)
 #																			#
 #############################################################################
 
-SRCS_PATH	=	./sources/
+SRCS_PATH	=	./srcs/
 OBJS_PATH	=	./objects/
 LIBFT_PATH	=	./libft/
 
