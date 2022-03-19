@@ -6,7 +6,7 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 12:56:28 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 16:51:47 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/19 17:02:00 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	movement(int direction, t_block *plate, int size, int win)
 		down(plate, size);
 	else
 		return (0);
+	new_block(plate, size);	
 	if (win == 0)
 	{
 		res = winning(plate, size);
