@@ -6,23 +6,11 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 11:42:25 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 12:02:05 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/19 13:35:37 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_2048.h"
-
-int	get_random(void)
-{
-	int	i;
-	time_t	t;
-
-	srand((unsigned)time(&t));
-	i = rand() % 100;
-	if (i < 80)
-		return (2);
-	return (4);
-}
 
 void	new_block(t_block *plate, int size)
 {
@@ -35,16 +23,14 @@ void	new_block(t_block *plate, int size)
 	plate[i].number = get_random();
 }
 
-int	is_power_2(int n)
+int	fusion(t_block *a, t_block *b)
 {
-	if (n <= 0)
+	if (a->number != b->number)
 		return (FALSE);
-	while (n > 1)
-	{
-		if (n % 2 == 1)
-			return (FALSE);
-		n = n / 2;
-	}
+	if (a->fusion == TRUE)
+		return (FALSE);
+	a->number *= 2;	
+	a->fusion = TRUE;
 	return (TRUE);
 }
 
@@ -62,6 +48,30 @@ int	winning(t_block *plate, int size)
 		i++;
 	}
 	return (FALSE);
+}
+
+t_block	*copy(t_block *original, int size)
+{
+	t_block	*new;
+	int	i;
+
+	new = (t_block *)malloc(sizeof(t_block) * (size * size));
+	i = 0;
+	while (i < (size * size))
+	{
+		new[i].number = original[i].number;
+		new[i].fusion = FALSE;
+		i++;
+	}
+	return (new);
+}
+
+int	lose(t_block *plate, int size)
+{
+	t_block *temp;
+
+	temp = copy(plate, size);
+	free(temp);
 }
 
 t_block	*initialisation(int size)	

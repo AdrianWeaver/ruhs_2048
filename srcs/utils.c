@@ -1,22 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/19 10:26:50 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 11:47:03 by douattar         ###   ########.fr       */
+/*   Created: 2022/03/19 12:55:51 by douattar          #+#    #+#             */
+/*   Updated: 2022/03/19 13:27:13 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_2048.h"
+# include "ft_2048.h"
 
-int	main(void)
+int	is_power_2(int n)
 {
-	t_block *plateau;
+	if (n <= 0)
+		return (FALSE);
+	while (n > 1)
+	{
+		if (n % 2 == 1)
+			return (FALSE);
+		n = n / 2;
+	}
+	return (TRUE);
+}
 
-	plateau = initialisation(4);
-	(void)plateau;
-	return (0);
+int	get_random(void)
+{
+	int	i;
+	time_t	t;
+
+	srand((unsigned)time(&t));
+	i = rand() % 100;
+	if (i < 80)
+		return (2);
+	return (4);
+}
+
+int	swap(int *a, int *b)
+{
+	int	temp;
+
+	temp = *a;
+	*a = *b;
+	*b = temp;
 }

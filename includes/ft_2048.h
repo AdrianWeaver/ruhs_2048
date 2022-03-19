@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:38:39 by aweaver           #+#    #+#             */
-/*   Updated: 2022/03/19 12:05:00 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/19 13:00:23 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,14 @@ typedef struct s_block {
 	int	fusion;
 }		t_block;
 
-int	get_random(void);
+t_block	*initialisation(int size);
 void	new_block(t_block *plate, int size);
 int	winning(t_block *plate, int size);
+t_block	*copy(t_block *original, int size);
+int	lose(t_block *plate, int size);
+
+int	get_random(void);
 int	is_power_2(int n);
-t_block	*initialisation(int size);
 
 enum	e_const
 {
