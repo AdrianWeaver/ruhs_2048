@@ -19,8 +19,10 @@ INC		=		-I ./libft/includes\
 #																			#
 #############################################################################
 
-SRCS	=	test.c					\
-			block.c utils.c move.c
+SRCS	=	main.c					\
+			block.c					\
+			utils.c					\
+			move.c
 OBJS	=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
 DEPS	=	$(OBJS:.o=.d)
 LIBFT	=	$(addprefix $(LIBFT_PATH), libft.a) 
@@ -66,7 +68,7 @@ re:					fclean
 
 
 test:				$(NAME)	
-					./2048
+					./2048 4
 
 aw:					
 					$(CC) $(CFLAGS) aw.c -o test $(INC) $(LIBFT) -lncurses
