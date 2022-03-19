@@ -6,14 +6,16 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 12:56:28 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 15:56:02 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/19 16:24:46 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "ft_2048.h"
 
-int	movemenent(int direction, t_block *plate, int size)
+int	movemenent(int direction, t_block *plate, int size, int win)
 {
+	int	res;
+
 	if (direction == 1)
 		right(plate, size);
 	if (direction == 2)
@@ -22,7 +24,15 @@ int	movemenent(int direction, t_block *plate, int size)
 		up(plate, size);
 	if (direction == 4)
 		down(plate, size);
-
+	if (win == 0)
+	{
+		res = winning(plate, size);
+		if (res != 0)
+			return (res);
+	}
+	res = lose(plate, size);
+	if (res == 0)
+		return (2);
 	return (0);
 }
 
