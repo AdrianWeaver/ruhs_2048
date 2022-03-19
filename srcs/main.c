@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   aw.c                                               :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:35:55 by aweaver           #+#    #+#             */
-/*   Updated: 2022/03/19 16:45:34 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/03/19 17:13:18 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_destroy_board(void *window, void **board, int size)
 	delwin(window);
 }
 
-void	**ft_create_box(void *window, int size)
+void	**ft_create_box(void *window, int size, t_block *board_values)
 {
 	void	**board;
 	int		tile_nb;
@@ -50,12 +50,20 @@ void	**ft_create_box(void *window, int size)
 		{
 			board[tile_nb] = subwin(window, 6, 12, 1 + (j * 6), 2 + (i * 12));
 			wborder(board[tile_nb], 0, 0, 0, 0, 0, 0, 0, 0);
+			mvwprintw(board[tile_nb],
+					3, 1, "%d", board_values[tile_nb].number);
 			tile_nb++;
 			j++;
 		}
 		i++;
 	}
 	return (board);
+}
+
+void	**ft_redraw(void *window, int size, void **board, t_block *board_values)
+{
+	ft_destroy_board(window, board, size);
+	return (ft_create_box(window, size, board_values));
 }
 
 void	ft_check_size(void *window, void **board, int size)
@@ -96,11 +104,15 @@ int	main(int argc, char **argv)
 	noecho();
 	keypad(window, TRUE);
 	nodelay(window, TRUE);
-	board = ft_create_box(window, size);
+	board = ft_create_box(window, size, board_values);
 	while (1)
 	{
 		key = wgetch(window);
-		win = movement(key, board_values, size, win);
+		if (key == KEY_UP || key == KEY_DOWN || key == KEY_RIGHT || key == KEY_LEFT)
+		{
+			win = movement(key, board_values, size, win);
+			ft_redraw(window, size, board, board_values);
+		}
 		if (key == KEY_ESC)
 		{
 			break ;
