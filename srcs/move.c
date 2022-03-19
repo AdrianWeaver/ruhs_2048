@@ -6,7 +6,7 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 12:56:28 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 17:02:00 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/19 19:07:21 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,26 @@
 int	movement(int direction, t_block *plate, int size, int win)
 {
 	int	res;
+	int	i;
 
+	res = 0;
 	if (direction == KEY_RIGHT)
-		right(plate, size);
+		res = right(plate, size);
 	else if (direction == KEY_LEFT)
-		left(plate, size);	
+		res = left(plate, size);
 	else if (direction == KEY_UP)
-		up(plate, size);
+		res = up(plate, size);	
 	else if (direction == KEY_DOWN)
-		down(plate, size);
+		res = down(plate, size);
 	else
+		return (0);
+	i = 0;
+	while (i < size * size)
+	{
+		plate[i].fusion = FALSE;
+		i++;
+	}
+	if (res == 0)
 		return (0);
 	new_block(plate, size);	
 	if (win == 0)
@@ -40,13 +50,15 @@ int	movement(int direction, t_block *plate, int size, int win)
 }
 
 
-void	right(t_block *plate, int size)
+int	down(t_block *plate, int size)
 {
 	int	i;
 	int	puissance;
 	int	j;
 	int	n;
+	int	res;
 
+	res = 0;
 	puissance = size;
 	i = puissance - 1;
 	n = (size * size);
@@ -59,6 +71,7 @@ void	right(t_block *plate, int size)
 				swap(&(plate[i + 1].number), &(plate[i].number));
 			else if (!fusion(&(plate[i + 1]), &(plate[i])))
 				break;
+			res++;
 			i++;
 		}
 		i = j;
@@ -69,14 +82,17 @@ void	right(t_block *plate, int size)
 		}
 		i--;
 	}
+	return (res);
 }
 
-void	left(t_block *plate, int size)
+int	up(t_block *plate, int size)
 {
 	int	i;
 	int	j;
 	int	n;
+	int	res;
 
+	res = 0;
 	i = 1;
 	n = (size * size);
 	while (i < n)
@@ -88,20 +104,24 @@ void	left(t_block *plate, int size)
 				swap(&(plate[i - 1].number), &(plate[i].number));
 			else if (!fusion(&(plate[i - 1]), &(plate[i])))
 				break;
+			res++;
 			i--;
 		}
 		i = j;
 		i++;
 	}
+	return (res);
 }
 
-void	up(t_block *plate, int size)
+int	left(t_block *plate, int size)
 {
 	int	i;
 	int	compteur;
 	int	j;
 	int	n;
+	int	res;
 
+	res = 0;
 	n = (size * size);
 	compteur = 0;
 	i = 0;
@@ -114,6 +134,7 @@ void	up(t_block *plate, int size)
 				swap(&(plate[i - size].number), &(plate[i].number));
 			else if (!fusion(&(plate[i - size]), &(plate[i])))
 				break;
+			res++;
 			i -= size;
 		}
 		i = j;
@@ -124,27 +145,31 @@ void	up(t_block *plate, int size)
 			i = compteur;
 		}
 	}
+	return (res);
 }
 
-void	down(t_block *plate, int size)
+int	right(t_block *plate, int size)
 {	
 	int	i;
 	int	compteur;
 	int	j;
 	int	n;
+	int	res;
 
+	res = 0;
 	n = (size * size);
 	compteur = 0;
 	i = n - size;
 	while (i < n)
 	{
 		j = i;
-		while ((i + size) < n)
+		while (i + size < n)
 		{
 			if (plate[i + size].number == HOLLOW)
 				swap(&(plate[i + size].number), &(plate[i].number));
 			else if (!fusion(&(plate[i + size]), &(plate[i])))
 				break;
+			res++;
 			i += size;
 		}
 		i = j;
@@ -155,4 +180,5 @@ void	down(t_block *plate, int size)
 			i = n - size + compteur;
 		}
 	}
+	return (res);
 }

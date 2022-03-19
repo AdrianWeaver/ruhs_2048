@@ -6,7 +6,7 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 11:42:25 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 16:24:05 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/19 18:54:02 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	compare(t_block *original, t_block *copy, int size)
 	i = 0;
 	while (i < size)	
 	{
-		if (copy[i].number != original[i].number)
+		if (copy[i].number != original[i].number || original[i].fusion)
 			return (FALSE);
 		i++;
 	}
