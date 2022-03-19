@@ -45,7 +45,7 @@ LIBFT_PATH	=	./libft/
 all:				$(NAME)
 
 $(NAME):			$(OBJS) $(LIBFT)
-					$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIBFT) -lm
+					$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIBFT) -lncurses
 
 $(OBJS_PATH)%.o:	$(SRCS_PATH)%.c
 					@mkdir -p $(OBJS_PATH)
@@ -67,5 +67,9 @@ re:					fclean
 test:				$(NAME)	
 					./2048
 
+aw:					
+					$(CC) $(CFLAGS) aw.c -o test $(INC) $(LIBFT) -lncurses
+					./test
+
 -include $(DEPS)
-.PHONY:				all clean fclean re bonus test
+.PHONY:				all clean fclean re bonus test -lncurses
