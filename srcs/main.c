@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:35:55 by aweaver           #+#    #+#             */
-/*   Updated: 2022/03/19 19:32:36 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/03/19 19:36:51 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ void	**ft_create_box(void *window, int size, t_block *board_values)
 		j = 0;
 		while (j < size)
 		{
-			//board[tile_nb] = subwin(window, 6, ((win_col - 4) / size), 1 + (j * 6), 2 + (i * ((win_col - 4) / size)));
 			board[tile_nb] = subwin(window, tile_height, tile_length , 1 + (j * tile_height), 2 + (i *tile_length));
 			wborder(board[tile_nb], 0, 0, 0, 0, 0, 0, 0, 0);
-			mvwprintw(board[tile_nb],
+			if (board_values[tile_nb].number != 0)
+				mvwprintw(board[tile_nb],
 					(tile_height / 2), (tile_length /2), "%d", board_values[tile_nb].number);
 			tile_nb++;
 			j++;
@@ -139,6 +139,8 @@ int	main(int argc, char **argv)
 		if (key == KEY_UP || key == KEY_DOWN || key == KEY_RIGHT || key == KEY_LEFT)
 		{
 			win = movement(key, board_values, size, win);
+			clear();
+			refresh();
 			ft_redraw(window, size, board, board_values);
 		}
 		if (key == KEY_ESC)
