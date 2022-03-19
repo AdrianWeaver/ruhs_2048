@@ -68,7 +68,7 @@ re:					fclean
 
 
 test:				$(NAME)	
-					./2048
+					./2048 4
 
 aw:					
 					$(CC) $(CFLAGS) aw.c -o test $(INC) $(LIBFT) -lncurses
