@@ -6,7 +6,7 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 12:56:28 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 16:24:46 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/19 16:42:48 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@ int	movemenent(int direction, t_block *plate, int size, int win)
 {
 	int	res;
 
-	if (direction == 1)
+	if (direction == KEY_RIGHT)
 		right(plate, size);
-	if (direction == 2)
+	else if (direction == KEY_LEFT)
 		left(plate, size);	
-	if (direction == 3)
+	else if (direction == KEY_UP)
 		up(plate, size);
-	if (direction == 4)
+	else if (direction == KEY_DOWN)
 		down(plate, size);
+	else
+		return (0);
 	if (win == 0)
 	{
 		res = winning(plate, size);
