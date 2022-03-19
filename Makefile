@@ -70,7 +70,7 @@ test:				$(NAME)
 
 aw:					
 					$(CC) $(CFLAGS) aw.c -o test $(INC) $(LIBFT) -lncurses
-					./test
+					./test 4
 
 -include $(DEPS)
 .PHONY:				all clean fclean re bonus test -lncurses

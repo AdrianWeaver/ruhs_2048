@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:38:39 by aweaver           #+#    #+#             */
-/*   Updated: 2022/03/19 14:52:27 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/19 16:44:46 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # define TRUE 1
 # define HOLLOW 0
 # define FALSE 0
+# define MALLOC_ERROR 12
 
 # include <time.h>
 # include <stdlib.h>
@@ -28,7 +29,8 @@
 /*								Data define									*/
 /****************************************************************************/
 
-typedef struct s_block {
+typedef struct s_block
+{
 	int	number;
 	int	fusion;
 }		t_block;
@@ -42,7 +44,7 @@ enum	e_const
 /*							Functions define								*/
 /****************************************************************************/
 
-int	movement(int direction, t_block *plate, int size);
+int		movement(int direction, t_block *plate, int size, int win);
 void	left(t_block *plate, int size);
 void	right(t_block *plate, int size);
 void	up(t_block *plate, int size);
@@ -51,9 +53,9 @@ int		get_random(void);
 void	new_block(t_block *plate, int size);
 void	swap(int *a, int *b);
 int		winning(t_block *plate, int size);
-int	lose(t_block *plate, int size);
+int		lose(t_block *plate, int size);
 int		is_power_2(int n);
-int	fusion(t_block *a, t_block *b);
+int		fusion(t_block *a, t_block *b);
 t_block	*initialisation(int size);
 t_block	*copy(t_block *original, int size);
 
