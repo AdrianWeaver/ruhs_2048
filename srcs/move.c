@@ -6,7 +6,7 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 12:56:28 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 20:35:45 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/19 20:55:19 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,16 @@ int	movement(int direction, t_block *plate, int size, int win)
 	while (i < size * size)
 	{
 		plate[i].fusion = FALSE;
+		if (plate[i].number == 2048)
+			return (3);
 		i++;
 	}
 	if (res == 0)
 		return (0);
 	new_block(plate, size);	
-	if (win == 0)
-	{
-		res = winning(plate, size);
-		if (res != 0)
-			return (res);
-	}
-	res = lose(plate, size);
-	if (res == 0)
+	if (win == 0 && winning(plate, size) == 1)
+		return (1);
+	if (lose(plate, size) == 0)
 		return (2);
 	return (0);
 }
