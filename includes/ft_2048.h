@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:38:39 by aweaver           #+#    #+#             */
-/*   Updated: 2022/03/19 12:02:55 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/19 12:05:00 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <time.h>
 # include <stdlib.h>
 # include <signal.h>
+# include <curses.h>
 # include "libft.h"
 # include "libftprintf.h"
 # include "get_next_line.h"
