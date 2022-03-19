@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:35:55 by aweaver           #+#    #+#             */
-/*   Updated: 2022/03/19 19:36:51 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/03/19 19:46:08 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,10 +150,15 @@ int	main(int argc, char **argv)
 		refresh();
 		if (win == 1)
 			won = 1;
+		if (win == 2)
+			break ;
 	}
 	ft_destroy_board(window, board, size);
+	clear();
 	endwin();
 	free(board_values);
+	if (win == 2)
+		ft_printf("You lost I'm afraid\n");
 	exit(0);
 	return (0);
 }
