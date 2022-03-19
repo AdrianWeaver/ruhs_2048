@@ -19,7 +19,7 @@ INC		=		-I ./libft/includes\
 #																			#
 #############################################################################
 
-SRCS	=	main.c					\
+SRCS	=	main.c block.c					\
 OBJS	=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
 DEPS	=	$(OBJS:.o=.d)
 LIBFT	=	$(addprefix $(LIBFT_PATH), libft.a) 
