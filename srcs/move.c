@@ -6,13 +6,13 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 12:56:28 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 16:42:48 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/19 16:51:47 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "ft_2048.h"
 
-int	movemenent(int direction, t_block *plate, int size, int win)
+int	movement(int direction, t_block *plate, int size, int win)
 {
 	int	res;
 
