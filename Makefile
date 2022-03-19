@@ -20,6 +20,7 @@ INC		=		-I ./libft/includes\
 #############################################################################
 
 SRCS	=	main.c					\
+			block.c
 OBJS	=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
 DEPS	=	$(OBJS:.o=.d)
 LIBFT	=	$(addprefix $(LIBFT_PATH), libft.a) 
@@ -31,7 +32,7 @@ LIBFT	=	$(addprefix $(LIBFT_PATH), libft.a)
 #																			#
 #############################################################################
 
-SRCS_PATH	=	./sources/
+SRCS_PATH	=	./srcs/
 OBJS_PATH	=	./objects/
 LIBFT_PATH	=	./libft/
 
