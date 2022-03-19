@@ -6,7 +6,7 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 12:56:28 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 20:08:02 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/19 20:35:45 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ int	down(t_block *plate, int size)
 				swap(&(plate[i + 1].number), &(plate[i].number));
 				swap(&(plate[i + 1].fusion), &(plate[i].fusion));
 			}
-			else if (!fusion(&(plate[i + 1]), &(plate[i])))
+			else if (fusion(&(plate[i + 1]), &(plate[i])))
+				res++;
+			else
 				break;
 			res++;
 			i++;
@@ -104,8 +106,13 @@ int	up(t_block *plate, int size)
 		while (i % size != 0)
 		{
 			if (plate[i - 1].number == HOLLOW)
+			{
 				swap(&(plate[i - 1].number), &(plate[i].number));
-			else if (!fusion(&(plate[i - 1]), &(plate[i])))
+				swap(&(plate[i - 1].fusion), &(plate[i].fusion));
+			}
+			else if (fusion(&(plate[i - 1]), &(plate[i])))
+				res++;
+			else
 				break;
 			res++;
 			i--;
@@ -134,8 +141,13 @@ int	left(t_block *plate, int size)
 		while (i >= size)
 		{
 			if (plate[i - size].number == HOLLOW)
+			{
 				swap(&(plate[i - size].number), &(plate[i].number));
-			else if (!fusion(&(plate[i - size]), &(plate[i])))
+				swap(&(plate[i - size].fusion), &(plate[i].fusion));
+			}
+			else if (fusion(&(plate[i - size]), &(plate[i])))
+				res++;
+			else
 				break;
 			res++;
 			i -= size;
@@ -169,8 +181,13 @@ int	right(t_block *plate, int size)
 		while (i + size < n)
 		{
 			if (plate[i + size].number == HOLLOW)
+			{
 				swap(&(plate[i + size].number), &(plate[i].number));
-			else if (!fusion(&(plate[i + size]), &(plate[i])))
+				swap(&(plate[i + size].fusion), &(plate[i].fusion));
+			}
+			else if (fusion(&(plate[i + size]), &(plate[i])))
+				res++;
+			else
 				break;
 			res++;
 			i += size;
