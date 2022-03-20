@@ -6,48 +6,39 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 12:56:28 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/20 09:30:16 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/20 10:37:55 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "ft_2048.h"
 
-int	movement(int direction, t_block *plate, int size, int win)
+int	movement(int direction, t_block *plate, int size, int win, int *score)
 {
 	int	res;
-	int	i;
 
 	res = 0;
 	if (direction == KEY_RIGHT)
-		res = right(plate, size);
+		res = right(plate, size, score);
 	else if (direction == KEY_LEFT)
-		res = left(plate, size);
+		res = left(plate, size, score);
 	else if (direction == KEY_UP)
-		res = up(plate, size);	
+		res = up(plate, size, score);	
 	else if (direction == KEY_DOWN)
-		res = down(plate, size);
+		res = down(plate, size, score);
 	else
 		return (0);
-	i = 0;
-	while (i < size * size)
-	{
-		plate[i].fusion = FALSE;
-		if (plate[i].number == 2048)
-			return (3);
-		i++;
-	}
+	if (reset(plate, size) == 3)
+		return (3);
 	if (res == 0)
 		return (0);
-	new_block(plate, size);	
+	new_block(plate, size, res);	
 	if (win == 0 && winning(plate, size) == 1)
 		return (1);
-	if (lose(plate, size) == 0)
-		return (2);
-	return (0);
+	return (lose(plate, size));
 }
 
 
-int	down(t_block *plate, int size)
+int	down(t_block *plate, int size, int *score)
 {
 	int	i;
 	int	puissance;
@@ -70,7 +61,10 @@ int	down(t_block *plate, int size)
 				swap(&(plate[i + 1].fusion), &(plate[i].fusion));
 			}
 			else if (fusion(&(plate[i + 1]), &(plate[i])))
+			{
+				*score += plate[i + 1].number;
 				res++;
+			}
 			else
 				break;
 			res++;
@@ -87,7 +81,7 @@ int	down(t_block *plate, int size)
 	return (res);
 }
 
-int	up(t_block *plate, int size)
+int	up(t_block *plate, int size, int *score)
 {
 	int	i;
 	int	j;
@@ -108,7 +102,10 @@ int	up(t_block *plate, int size)
 				swap(&(plate[i - 1].fusion), &(plate[i].fusion));
 			}
 			else if (fusion(&(plate[i - 1]), &(plate[i])))
+			{
+				*score += plate[i - 1].number;
 				res++;
+			}
 			else
 				break;
 			res++;
@@ -120,7 +117,7 @@ int	up(t_block *plate, int size)
 	return (res);
 }
 
-int	left(t_block *plate, int size)
+int	left(t_block *plate, int size, int *score)
 {
 	int	i;
 	int	compteur;
@@ -143,7 +140,10 @@ int	left(t_block *plate, int size)
 				swap(&(plate[i - size].fusion), &(plate[i].fusion));
 			}
 			else if (fusion(&(plate[i - size]), &(plate[i])))
+			{
+				*score += plate[i - size].number;
 				res++;
+			}
 			else
 				break;
 			res++;
@@ -160,7 +160,7 @@ int	left(t_block *plate, int size)
 	return (res);
 }
 
-int	right(t_block *plate, int size)
+int	right(t_block *plate, int size, int *score)
 {	
 	int	i;
 	int	compteur;
@@ -183,7 +183,10 @@ int	right(t_block *plate, int size)
 				swap(&(plate[i + size].fusion), &(plate[i].fusion));
 			}
 			else if (fusion(&(plate[i + size]), &(plate[i])))
+			{
+				*score += plate[i + size].number;
 				res++;
+			}
 			else
 				break;
 			res++;

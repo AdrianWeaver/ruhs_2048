@@ -6,17 +6,17 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 11:42:25 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 20:39:53 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/20 10:33:25 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_2048.h"
 
-void	new_block(t_block *plate, int size)
+void	new_block(t_block *plate, int size, unsigned int key)
 {
 	int	i;
 	
-	srand((unsigned)time(NULL));
+	srand(key);
 	i = rand() % (size * size);
 	while (plate[i].number != HOLLOW)
 		i = rand() % (size * size);
@@ -78,11 +78,26 @@ int	compare(t_block *original, t_block *copy, int size)
 	i = 0;
 	while (i < size)	
 	{
-		if (copy[i].number != original[i].number || original[i].fusion)
+		if (copy[i].number != original[i].number || copy[i].fusion || original[i].fusion)
 			return (FALSE);
 		i++;
 	}
 	return (TRUE);
+}
+
+int	reset(t_block *plate, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size * size)
+	{
+		plate[i].fusion = FALSE;
+		if (plate[i].number == 2048)
+			return (3);
+		i++;
+	}
+	return (0);
 }
 
 int	lose(t_block *plate, int size)
@@ -91,32 +106,37 @@ int	lose(t_block *plate, int size)
 
 	temp = copy(plate, size);
 	if (temp == NULL)
-		return (1);
+		return (2);
 	right(temp, size);
 	if (!compare(plate, temp, size))
 	{
 		free(temp);
-		return (1);
+		return (0);
 	}
+	reset(temp, size);
 	left(temp, size);
 	if (!compare(plate, temp, size))
 	{
 		free(temp);
-		return (1);
+		return (0);
 	}
+	reset(temp, size);
 	up(temp, size);
 	if (!compare(plate, temp, size))
 	{
 		free(temp);
-		return (1);
+		return (0);
 	}
+	reset(temp, size);
 	down(temp, size);
 	if (!compare(plate, temp, size))
 	{
 		free(temp);
-		return (1);
+		return (0);
 	}
-	return (0);
+	reset(temp, size);
+	free(temp);
+	return (2);
 }
 
 t_block	*initialisation(int size)	
@@ -136,7 +156,7 @@ t_block	*initialisation(int size)
 		res[i].fusion = FALSE;
 		i++;
 	}
-	new_block(res, size);
-	new_block(res, size);
+	new_block(res, size, time(NULL));
+	new_block(res, size, size * size);
 	return (res);
 }

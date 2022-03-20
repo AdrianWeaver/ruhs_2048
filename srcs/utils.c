@@ -6,7 +6,7 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 12:55:51 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 13:53:41 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/20 10:04:08 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	get_random(void)
 
 	srand((unsigned)time(&t));
 	i = rand() % 100;
-	if (i < 80)
+	if (i < 90)
 		return (2);
 	return (4);
 }

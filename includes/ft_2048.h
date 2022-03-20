@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:38:39 by aweaver           #+#    #+#             */
-/*   Updated: 2022/03/19 19:00:25 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/20 10:39:42 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,15 @@ enum	e_const
 /*							Functions define								*/
 /****************************************************************************/
 
-int	down(t_block *plate, int size);
-int	up(t_block *plate, int size);
-int	left(t_block *plate, int size);
-int	right(t_block *plate, int size);
-int		movement(int direction, t_block *plate, int size, int win);
+int	movement(int direction, t_block *plate, int size, int win, int *score);
+int	down(t_block *plate, int size, int *score);
+int	up(t_block *plate, int size, int *score);
+int	left(t_block *plate, int size, int *score);
+int	right(t_block *plate, int size, int *score);
+int	reset(t_block *plate, int size);
+void	new_block(t_block *plate, int size, unsigned int key);
 int	compare(t_block *original, t_block *copy, int size);
 int		get_random(void);
-void	new_block(t_block *plate, int size);
 void	swap(int *a, int *b);
 int		winning(t_block *plate, int size);
 int		lose(t_block *plate, int size);
