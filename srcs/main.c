@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:35:55 by aweaver           #+#    #+#             */
-/*   Updated: 2022/03/20 14:38:47 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/03/20 15:28:10 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_destroy_board(void *window, void **board, int size)
 	int	i;
 
 	i = 0;
-	while (i < size)
+	while (i < size + 1)
 	{
 		delwin(board[i]);
 		i++;
@@ -85,7 +85,7 @@ void	**ft_create_box(void *window, int size, t_block *board_values, int score, i
 	{
 		ft_destroy_board(window, board, 0);
 		endwin();
-		exit (MALLOC_ERROR);
+		return (NULL);
 	}
 	tile_length = (COLS - 4) / size;
 	tile_height = (LINES - 5) / size;
@@ -118,11 +118,20 @@ void	**ft_create_box(void *window, int size, t_block *board_values, int score, i
 		mvwprintw(board[tile_nb], 1, 1, "%*s %*s:%-*d", (size * tile_length) / 2, "CURRENT SCORE", 10, "yeah", 10, score);
 	return (board);
 }
+void	**ft_create_toosmall(void *window)
+{
+	wresize(window, LINES, COLS);
+	mvwprintw(window, LINES / 2, COLS / 2, "%s", "Too small");
+	return (NULL);
+}
 
 void	**ft_redraw(void *window, int size, void **board, t_block *board_values, int score, int won)
 {
 	ft_destroy_board(window, board, size);
-	return (ft_create_box(window, size, board_values, score, won));
+	if (COLS >= (4 + (6 * size)) && LINES >= (5 + (3 * size)))
+		return (ft_create_box(window, size, board_values, score, won));
+	else
+		return (ft_create_toosmall(window));
 }
 
 void	ft_check_size(void *window, void **board, int size)
@@ -144,9 +153,11 @@ void	ft_check_size(void *window, void **board, int size)
 		;
 }
 
-void	ft_init_color(void)
+int	ft_init_color(void)
 {
 	start_color();
+	if (start_color())
+		return (1);
 	init_pair(1, COLOR_WHITE, COLOR_BLACK);		//2 
 	init_pair(2, COLOR_YELLOW, COLOR_BLACK);	//4		|| 128
 	init_pair(3, COLOR_RED, COLOR_BLACK);		//8		|| 256
@@ -158,6 +169,7 @@ void	ft_init_color(void)
 	init_pair(9, COLOR_MAGENTA, COLOR_MAGENTA);	//512 border
 	init_pair(10, COLOR_CYAN, COLOR_CYAN);		//1024 border
 	init_pair(11, COLOR_GREEN, COLOR_GREEN);	//2048 border
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -180,13 +192,24 @@ int	main(int argc, char **argv)
 	if (board_values == NULL)
 		return (1);
 	window = initscr();
-	ft_init_color();
-	cbreak();
-	noecho();
-	keypad(window, TRUE);
+	if (window == NULL)
+		return (1);
+	if (ft_init_color() || cbreak() || noecho() || keypad(window, TRUE))
+	{
+		endwin();
+		delscreen(window);
+		free(board_values);
+		return (1);
+	}
 	nodelay(window, TRUE);
 	score = 0;
 	board = ft_create_box(window, size, board_values, score, won);
+	if (board == NULL)
+	{
+		endwin();
+		free(board_values);
+		return (0);
+	}
 	while (1)
 	{
 		key = wgetch(window);
@@ -210,17 +233,21 @@ int	main(int argc, char **argv)
 		refresh();
 		if (win == 1)
 			won = 1;
+		if (win == 3)
+			won = 2;
 		if (win == 2)
 			break ;
-		if (won == 1)
-			(void)won; //print a winning message;
 	}
 	ft_destroy_board(window, board, size);
 	clear();
 	endwin();
+	delscreen(window);
 	free(board_values);
 	if (win == 2)
 		ft_printf("You lost I'm afraid, final score: %d\n", score);
-	exit(0);
+	if (won == 1)
+		ft_printf("You are one of the few, good job. final score: %d\n", score);
+	else if (won == 2)
+		ft_printf("You bested the game, and this bloody unclear subject score : %d\n", score);
 	return (0);
 }
