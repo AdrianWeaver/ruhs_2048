@@ -294,7 +294,7 @@ int	main(void)
 	if (save == 1)
 	{
 		ft_printf("Please enter 3 letters to save highscore\n");
-		new_score(score, get_next_line(0));
+		//new_score(score, get_next_line(0)); disabled to prevent a leak
 	}
 	return (0);
 }
