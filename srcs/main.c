@@ -66,9 +66,8 @@ void	ft_color_letters(t_block *board_values, void **board, int tile_nb)
 		wattron(board[tile_nb], COLOR_PAIR(6));
 }
 
-void	**ft_create_box(void *window, int size, t_block *board_values, int score, int won)
+void	**ft_create_box(void **board, void *window, int size, t_block *board_values, int score, int won)
 {
-	void	**board;
 	int		tile_nb;
 	int		i;
 	int		j;
@@ -77,13 +76,6 @@ void	**ft_create_box(void *window, int size, t_block *board_values, int score, i
 
 	i = 0;
 	tile_nb = 0;
-	board = malloc(sizeof(*board) * (size * size) + 1);
-	if (board == NULL)
-	{
-		ft_destroy_board(window, board, 0);
-		endwin();
-		return (NULL);
-	}
 	tile_length = (COLS - 4) / size;
 	tile_height = (LINES - 5) / size;
 	wresize(window, 5 + (size * tile_height), 4 + (size * tile_length));
@@ -115,6 +107,7 @@ void	**ft_create_box(void *window, int size, t_block *board_values, int score, i
 		mvwprintw(board[tile_nb], 1, 1, "%s%*d", "CURRENT SCORE:", (size * tile_length) - 16, score);
 	return (board);
 }
+
 void	**ft_create_toosmall(void *window)
 { wresize(window, LINES, COLS); mvwprintw(window, LINES / 2, COLS / 2, "%s", "Too small");
 	return (NULL);
@@ -124,7 +117,7 @@ void	**ft_redraw(void *window, int size, void **board, t_block *board_values, in
 {
 	ft_destroy_board(window, board, size);
 	if (COLS >= (4 + (6 * size)) && LINES >= (5 + (3 * size)))
-		return (ft_create_box(window, size, board_values, score, won));
+		return (ft_create_box(board, window, size, board_values, score, won));
 	else
 		return (ft_create_toosmall(window));
 }
@@ -209,10 +202,9 @@ int	ft_menu(void *window, int key)
 int	main(void)
 {
 	t_block	*board_values;
-	void	*window;
-	void	**board;
-	int		key;
 	int		size;
+	void	*window;
+	int		key;
 	int		win;
 	int		won;
 	int		score;
@@ -237,6 +229,7 @@ int	main(void)
 	}
 	score = 0;
 	size = ft_menu(window, key);
+	void	*board[size * size];
 	if (size == 0)
 	{
 		endwin();
@@ -251,13 +244,7 @@ int	main(void)
 		free(board_values);
 		return (1);
 	}
-	board = ft_create_box(window, size, board_values, score, won);
-	if (board == NULL)
-	{
-		endwin();
-		free(board_values);
-		return (0);
-	}
+	ft_create_box(board, window, size, board_values, score, won);
 	while (1)
 	{
 		key = wgetch(window);
