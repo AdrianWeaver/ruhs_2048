@@ -216,16 +216,19 @@ int	main(void)
 	int		win;
 	int		won;
 	int		score;
+	int		save;
 
 	key = 0;
 	size = 4;
 	win = 0;
+	save = 1;
 	if (WIN_VALUE == 2)
 		win = 1;
 	won = 0;
 	window = initscr();
 	if (window == NULL)
 		return (1);
+	curs_set(0);
 	if (ft_init_color() || raw() || noecho() || keypad(window, TRUE) || nodelay(window, TRUE))
 	{
 		endwin();
@@ -273,6 +276,7 @@ int	main(void)
 		}
 		if (key == KEY_ESC || key == 3)
 		{
+			save = 0;
 			break ;
 		}
 		refresh();
@@ -300,7 +304,10 @@ int	main(void)
 		ft_printf("You are one of the few, good job. final score: %d\n", score);
 	else if (won == 2)
 		ft_printf("You bested the game, congratz! score : %d\n", score);
-	ft_printf("Please enter 3 letters to save highscore\n");
-	new_score(score, get_next_line(0));
+	if (save == 1)
+	{
+		ft_printf("Please enter 3 letters to save highscore\n");
+		new_score(score, get_next_line(0));
+	}
 	return (0);
 }
