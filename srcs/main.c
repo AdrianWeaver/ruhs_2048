@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:35:55 by aweaver           #+#    #+#             */
-/*   Updated: 2022/03/20 10:50:09 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/03/20 12:03:27 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,30 +69,27 @@ void	ft_color_letters(t_block *board_values, void **board, int tile_nb)
 		wattron(board[tile_nb], COLOR_PAIR(6));
 }
 
-void	**ft_create_box(void *window, int size, t_block *board_values)
+void	**ft_create_box(void *window, int size, t_block *board_values, int score)
 {
 	void	**board;
 	int		tile_nb;
 	int		i;
 	int		j;
-	int		win_col;
-	int		win_line;
 	int		tile_length;
 	int		tile_height;
 
 	i = 0;
 	tile_nb = 0;
-	board = malloc(sizeof(*board) * (size * size));
+	board = malloc(sizeof(*board) * (size * size) + 1);
 	if (board == NULL)
 	{
 		ft_destroy_board(window, board, 0);
 		endwin();
 		exit (MALLOC_ERROR);
 	}
-	getmaxyx(stdscr, win_line, win_col);
-	tile_length = (win_col - 4) / size;
-	tile_height = (win_line - 2) / size;
-	wresize(window, 2 + (size * tile_height), 4 + (size * tile_length));
+	tile_length = (COLS - 4) / size;
+	tile_height = (LINES - 5) / size;
+	wresize(window, 5 + (size * tile_height), 4 + (size * tile_length));
 	wborder(window, 0, 0, 0, 0, 0, 0, 0, 0);
 	while (i < size)
 	{
@@ -113,14 +110,16 @@ void	**ft_create_box(void *window, int size, t_block *board_values)
 		}
 		i++;
 	}
+	board[tile_nb] = subwin(window, 3, (size * tile_length), 1 + (j * tile_height), 2);
+	wborder(board[tile_nb], 0, 0, 0, 0, 0, 0, 0, 0);
+	mvwprintw(board[tile_nb], 1, 1, "%*s %*s:%-*d", (size * tile_length) / 2, "CURRENT SCORE", 10, "yeah", 10, score);
 	return (board);
 }
 
-void	**ft_redraw(void *window, int size, void **board, t_block *board_values)
+void	**ft_redraw(void *window, int size, void **board, t_block *board_values, int score)
 {
-	refresh();
 	ft_destroy_board(window, board, size);
-	return (ft_create_box(window, size, board_values));
+	return (ft_create_box(window, size, board_values, score));
 }
 
 void	ft_check_size(void *window, void **board, int size)
@@ -130,10 +129,8 @@ void	ft_check_size(void *window, void **board, int size)
 
 	getmaxyx(stdscr, win_line, win_col);
 	if (win_col < 4 + (size * 12) || win_line < 2 + (size * 6))
-	//while (win_col < 4 + (size * 12) || win_line < 2 + (size * 6))
 	{
 		refresh();
-		//getmaxyx(stdscr, win_line, win_col);
 		ft_destroy_board(window, board, size);
 		clear();
 		ft_printf("Incorrect terminal size, please resize to minimum %dL %dH\n\r",
@@ -160,12 +157,6 @@ void	ft_init_color(void)
 	init_pair(11, COLOR_GREEN, COLOR_GREEN);	//2048 border
 }
 
-void	ft_resize_handle(int signal)
-{
-	(void)signal;
-	g_resize = 1;
-}
-	
 int	main(int argc, char **argv)
 {
 	t_block	*board_values;
@@ -191,22 +182,23 @@ int	main(int argc, char **argv)
 	noecho();
 	keypad(window, TRUE);
 	nodelay(window, TRUE);
-	signal(28, ft_resize_handle);
-	board = ft_create_box(window, size, board_values);
+	score = 0;
+	board = ft_create_box(window, size, board_values, score);
 	while (1)
 	{
-		if (g_resize == 1)
-		{
-			ft_check_size(window, board, size);
-			g_resize = 0;
-		}
 		key = wgetch(window);
 		if (key == KEY_UP || key == KEY_DOWN || key == KEY_RIGHT || key == KEY_LEFT)
 		{
 			win = movement(key, board_values, size, win, &score);
 			clear();
 			refresh();
-			ft_redraw(window, size, board, board_values);
+			ft_redraw(window, size, board, board_values, score);
+		}
+		if (key == KEY_RESIZE)
+		{
+			clear();
+			refresh();
+			ft_redraw(window, size, board, board_values, score);
 		}
 		if (key == KEY_ESC)
 		{
@@ -225,7 +217,7 @@ int	main(int argc, char **argv)
 	endwin();
 	free(board_values);
 	if (win == 2)
-		ft_printf("You lost I'm afraid\n");
+		ft_printf("You lost I'm afraid, final score: %d\n", score);
 	exit(0);
 	return (0);
 }
