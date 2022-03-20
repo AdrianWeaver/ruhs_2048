@@ -116,9 +116,7 @@ void	**ft_create_box(void *window, int size, t_block *board_values, int score, i
 	return (board);
 }
 void	**ft_create_toosmall(void *window)
-{
-	wresize(window, LINES, COLS);
-	mvwprintw(window, LINES / 2, COLS / 2, "%s", "Too small");
+{ wresize(window, LINES, COLS); mvwprintw(window, LINES / 2, COLS / 2, "%s", "Too small");
 	return (NULL);
 }
 
@@ -222,6 +220,8 @@ int	main(void)
 	key = 0;
 	size = 4;
 	win = 0;
+	if (WIN_VALUE == 2)
+		win = 1;
 	won = 0;
 	window = initscr();
 	if (window == NULL)
@@ -300,5 +300,7 @@ int	main(void)
 		ft_printf("You are one of the few, good job. final score: %d\n", score);
 	else if (won == 2)
 		ft_printf("You bested the game, congratz! score : %d\n", score);
+	ft_printf("Please enter 3 letters to save highscore\n");
+	new_score(score, get_next_line(0));
 	return (0);
 }
