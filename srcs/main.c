@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:35:55 by aweaver           #+#    #+#             */
-/*   Updated: 2022/03/20 08:10:14 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/03/20 08:22:54 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ void	**ft_create_box(void *window, int size, t_block *board_values)
 			ft_color_border(board_values, board, tile_nb);
 			wborder(board[tile_nb], 0, 0, 0, 0, 0, 0, 0, 0);
 			ft_color_letters(board_values, board, tile_nb);
-			//wattron(board[tile_nb], COLOR_PAIR(board_values[tile_nb].number));
 			if (board_values[tile_nb].number != 0)
 				mvwprintw(board[tile_nb],
 					(tile_height / 2), (tile_length /2), "%d", board_values[tile_nb].number);
