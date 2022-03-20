@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:35:55 by aweaver           #+#    #+#             */
-/*   Updated: 2022/03/19 19:46:08 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/03/20 07:22:00 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,12 @@ void	**ft_create_box(void *window, int size, t_block *board_values)
 		{
 			board[tile_nb] = subwin(window, tile_height, tile_length , 1 + (j * tile_height), 2 + (i *tile_length));
 			wborder(board[tile_nb], 0, 0, 0, 0, 0, 0, 0, 0);
+			wattron(board[tile_nb], COLOR_PAIR(board_values[tile_nb].number));
 			if (board_values[tile_nb].number != 0)
 				mvwprintw(board[tile_nb],
 					(tile_height / 2), (tile_length /2), "%d", board_values[tile_nb].number);
+			else
+				wattron(board[tile_nb], COLOR_PAIR(1));
 			tile_nb++;
 			j++;
 		}
@@ -72,6 +75,7 @@ void	**ft_create_box(void *window, int size, t_block *board_values)
 
 void	**ft_redraw(void *window, int size, void **board, t_block *board_values)
 {
+	refresh();
 	ft_destroy_board(window, board, size);
 	return (ft_create_box(window, size, board_values));
 }
@@ -122,6 +126,19 @@ int	main(int argc, char **argv)
 	if (board_values == NULL)
 		return (1);
 	window = initscr();
+	start_color(); //added
+	init_pair(1, COLOR_WHITE, COLOR_WHITE);
+	init_pair(2, COLOR_WHITE, COLOR_BLACK);
+	init_pair(4, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(8, COLOR_RED, COLOR_BLACK);
+	init_pair(16, COLOR_MAGENTA, COLOR_BLACK);
+	init_pair(32, COLOR_CYAN, COLOR_BLACK);
+	init_pair(64, COLOR_GREEN, COLOR_BLACK);
+	init_pair(128, COLOR_BLACK, COLOR_YELLOW);
+	init_pair(256, COLOR_BLACK, COLOR_RED);
+	init_pair(512, COLOR_BLACK, COLOR_MAGENTA);
+	init_pair(1024, COLOR_BLACK, COLOR_CYAN);
+	init_pair(2048, COLOR_BLACK, COLOR_GREEN);
 	cbreak();
 	noecho();
 	keypad(window, TRUE);
@@ -152,6 +169,8 @@ int	main(int argc, char **argv)
 			won = 1;
 		if (win == 2)
 			break ;
+		if (won == 1)
+			(void)won; //print a winning message;
 	}
 	ft_destroy_board(window, board, size);
 	clear();
