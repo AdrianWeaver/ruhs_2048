@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:35:55 by aweaver           #+#    #+#             */
-/*   Updated: 2022/03/20 16:00:05 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/03/20 16:25:06 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ int	main(void)
 			break ;
 		}
 		refresh();
-		if (win == 1)
+		if (win == 1 && won == 0)
 		{
 			ft_redraw(window, size, board, board_values, score, won);
 			won = 1;
@@ -222,7 +222,7 @@ int	main(void)
 	endwin();
 	delscreen(window);
 	free(board_values);
-	if (win == 2)
+	if (win == 2 && won == 0)
 		ft_printf("You lost I'm afraid, final score: %d\n", score);
 	if (won == 1)
 		ft_printf("You are one of the few, good job. final score: %d\n", score);
