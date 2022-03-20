@@ -6,7 +6,7 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 12:56:28 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/19 20:55:19 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/20 09:30:16 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	down(t_block *plate, int size)
 	while (i < n)
 	{
 		j = i;
-		while ((i + 1) % size != 0)
+		while ((i + 1) % size != 0 && plate[i].number != HOLLOW)
 		{
 			if (plate[i + 1].number == HOLLOW)
 			{
@@ -100,7 +100,7 @@ int	up(t_block *plate, int size)
 	while (i < n)
 	{
 		j = i;
-		while (i % size != 0)
+		while (i % size != 0 && plate[i].number != 0)
 		{
 			if (plate[i - 1].number == HOLLOW)
 			{
@@ -135,7 +135,7 @@ int	left(t_block *plate, int size)
 	while (compteur < size)
 	{
 		j = i;
-		while (i >= size)
+		while (i >= size && plate[i].number != HOLLOW)
 		{
 			if (plate[i - size].number == HOLLOW)
 			{
@@ -175,7 +175,7 @@ int	right(t_block *plate, int size)
 	while (i < n)
 	{
 		j = i;
-		while (i + size < n)
+		while (i + size < n && plate[i].number != HOLLOW)
 		{
 			if (plate[i + size].number == HOLLOW)
 			{
