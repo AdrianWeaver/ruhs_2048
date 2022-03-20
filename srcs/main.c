@@ -1,8 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
+/*   main.c                                             :+:      :+:    :+:   */ /*                                                    +:+ +:+         +:+     */
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:35:55 by aweaver           #+#    #+#             */
@@ -150,6 +149,64 @@ int	ft_init_color(void)
 	init_pair(11, COLOR_GREEN, COLOR_GREEN);	//2048 border
 	return (0);
 }
+int	ft_menu(void *window, int key)
+{
+	int	size;
+
+	mvwprintw(window, LINES / 2, COLS / 2, "%s", "Choose a size between 4 and 9 included");
+	while (1)
+	{
+		key = wgetch(window);
+		if (key == KEY_FOUR) 
+		{
+			size = 4;
+			break ;
+		}
+		if (key == KEY_FIVE) 
+		{
+			size = 5;
+			break ;
+		}
+		if (key == KEY_SIX) 
+		{
+			size = 6;
+			break ;
+		}
+		if (key == KEY_SEVEN) 
+		{
+			size = 7;
+			break ;
+		}
+		if (key == KEY_EIGHT) 
+		{
+			size = 8;
+			break ;
+		}
+		if (key == KEY_NINE) 
+		{
+			size = 9;
+			break ;
+		}
+		if (key == KEY_ESC) 
+		{
+			size = 0;
+			break ;
+		}
+		if (key == KEY_RESIZE)
+		{
+			clear();
+			refresh();
+			if (COLS > 1 && LINES >= 2)
+			{
+				mvwprintw(window, 1, 1, "%s", "Welcome to our Awesome Menu!");
+				mvwprintw(window, LINES / 2, 1, "%s", "Choose a size between 4 and 9 included");
+			}
+		}
+	}
+	clear();
+	refresh();
+	return (size);
+}
 
 int	main(void)
 {
@@ -162,12 +219,10 @@ int	main(void)
 	int		won;
 	int		score;
 
+	key = 0;
 	size = 4;
 	win = 0;
 	won = 0;
-	board_values = initialisation(size);
-	if (board_values == NULL)
-		return (1);
 	window = initscr();
 	if (window == NULL)
 		return (1);
@@ -175,10 +230,24 @@ int	main(void)
 	{
 		endwin();
 		delscreen(window);
-		free(board_values);
 		return (1);
 	}
 	score = 0;
+	size = ft_menu(window, key);
+	if (size == 0)
+	{
+		endwin();
+		delscreen(window);
+		return (1);
+	}
+	board_values = initialisation(size);
+	if (board_values == NULL)
+	{
+		endwin();
+		delscreen(window);
+		free(board_values);
+		return (1);
+	}
 	board = ft_create_box(window, size, board_values, score, won);
 	if (board == NULL)
 	{
@@ -213,7 +282,10 @@ int	main(void)
 			won = 1;
 		}
 		if (win == 3)
+		{
 			won = 2;
+			break;
+		}
 		if (win == 2)
 			break ;
 	}
@@ -227,6 +299,6 @@ int	main(void)
 	if (won == 1)
 		ft_printf("You are one of the few, good job. final score: %d\n", score);
 	else if (won == 2)
-		ft_printf("You bested the game, and this bloody unclear subject score : %d\n", score);
+		ft_printf("You bested the game, congratz! score : %d\n", score);
 	return (0);
 }
