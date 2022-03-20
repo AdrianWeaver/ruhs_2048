@@ -22,6 +22,7 @@ INC		=		-I ./libft/includes\
 SRCS	=	main.c					\
 			block.c					\
 			utils.c					\
+			file.c					\
 			move.c
 OBJS	=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
 DEPS	=	$(OBJS:.o=.d)
@@ -66,6 +67,8 @@ fclean:				clean
 re:					fclean
 					@make all --no-print-directory
 
+
+bonus:				all
 
 test:				$(NAME)	
 					./2048
