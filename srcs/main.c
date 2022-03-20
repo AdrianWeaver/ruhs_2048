@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:35:55 by aweaver           #+#    #+#             */
-/*   Updated: 2022/03/20 08:22:54 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/03/20 10:50:09 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ int	main(int argc, char **argv)
 	int		size;
 	int		win;
 	int		won;
+	int		score;
 
 	if (argc != 2)
 		return (1);
@@ -202,7 +203,7 @@ int	main(int argc, char **argv)
 		key = wgetch(window);
 		if (key == KEY_UP || key == KEY_DOWN || key == KEY_RIGHT || key == KEY_LEFT)
 		{
-			win = movement(key, board_values, size, win);
+			win = movement(key, board_values, size, win, &score);
 			clear();
 			refresh();
 			ft_redraw(window, size, board, board_values);
