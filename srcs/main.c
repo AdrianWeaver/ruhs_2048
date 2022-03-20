@@ -110,9 +110,9 @@ void	**ft_create_box(void *window, int size, t_block *board_values, int score, i
 	board[tile_nb] = subwin(window, 3, (size * tile_length), 1 + (j * tile_height), 2);
 	wborder(board[tile_nb], 0, 0, 0, 0, 0, 0, 0, 0);
 	if (won == 1)
-		mvwprintw(board[tile_nb], 1, 1, "%s%*d", "GG! CURRENT SCORE:", COLS - 27, score);
+		mvwprintw(board[tile_nb], 1, 1, "%s%*d", "GG! CURRENT SCORE:", (size * tile_length) - 20, score);
 	else
-		mvwprintw(board[tile_nb], 1, 1, "%s%*d", "CURRENT SCORE:", COLS - 23, score);
+		mvwprintw(board[tile_nb], 1, 1, "%s%*d", "CURRENT SCORE:", (size * tile_length) - 16, score);
 	return (board);
 }
 void	**ft_create_toosmall(void *window)
