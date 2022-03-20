@@ -68,11 +68,11 @@ re:					fclean
 
 
 test:				$(NAME)	
-					./2048 4
+					./2048
 
 aw:					
 					$(CC) $(CFLAGS) aw.c -o test $(INC) $(LIBFT) -lncurses
-					./test 4
+					./test
 
 -include $(DEPS)
 .PHONY:				all clean fclean re bonus test -lncurses
