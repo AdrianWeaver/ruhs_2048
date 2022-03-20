@@ -6,7 +6,7 @@
 /*   By: douattar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 11:42:25 by douattar          #+#    #+#             */
-/*   Updated: 2022/03/20 10:33:25 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/20 10:54:01 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,33 +103,35 @@ int	reset(t_block *plate, int size)
 int	lose(t_block *plate, int size)
 {
 	t_block *temp;
+	int	res;
 
+	res = 0;
 	temp = copy(plate, size);
 	if (temp == NULL)
 		return (2);
-	right(temp, size);
-	if (!compare(plate, temp, size))
+	right(temp, size, &res);
+	if (res > 0 || !compare(plate, temp, size))
 	{
 		free(temp);
 		return (0);
 	}
 	reset(temp, size);
-	left(temp, size);
-	if (!compare(plate, temp, size))
+	left(temp, size, &res);
+	if (res > 0 || !compare(plate, temp, size))
 	{
 		free(temp);
 		return (0);
 	}
 	reset(temp, size);
-	up(temp, size);
-	if (!compare(plate, temp, size))
+	up(temp, size, &res);
+	if (res > 0 || !compare(plate, temp, size))
 	{
 		free(temp);
 		return (0);
 	}
 	reset(temp, size);
-	down(temp, size);
-	if (!compare(plate, temp, size))
+	down(temp, size, &res);
+	if (res > 0 || !compare(plate, temp, size))
 	{
 		free(temp);
 		return (0);
