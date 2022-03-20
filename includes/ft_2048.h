@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:38:39 by aweaver           #+#    #+#             */
-/*   Updated: 2022/03/20 10:39:42 by douattar         ###   ########.fr       */
+/*   Updated: 2022/03/20 14:32:52 by douattar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define MALLOC_ERROR 12
 
 # include <time.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <signal.h>
 # include <curses.h>
